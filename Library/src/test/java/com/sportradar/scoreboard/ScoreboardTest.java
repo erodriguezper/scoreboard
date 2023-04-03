@@ -74,6 +74,6 @@ public class ScoreboardTest {
         scoreboard.getSummaryByTotalScore();
         
         Mockito.verify(repository, Mockito.times(1))
-                .orderedList(OrderComparators.MAX_SCORER, OrderComparators.RECENTLY_ADDED);
+                .orderedList(OrderComparators.TOTAL_SCORE, OrderComparators.RECENTLY_ADDED);
     }
 }
