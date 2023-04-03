@@ -109,9 +109,9 @@ public class MatchTest {
         match = new Match(ID, HOME_TEAM_NAME, AWAY_TEAM_NAME, Instant.ofEpochMilli(1234));
 
         assertEquals(HOME_TEAM_NAME, match.getHomeTeam());
-        assertEquals(1, match.getHomeTeamScore());
+        assertEquals(0, match.getHomeTeamScore());
         assertEquals(AWAY_TEAM_NAME, match.getAwayTeam());
-        assertEquals(1, match.getAwayTeamScore());
+        assertEquals(0, match.getAwayTeamScore());
         assertEquals(Instant.ofEpochMilli(1234), Instant.ofEpochMilli(1234));
     }
 

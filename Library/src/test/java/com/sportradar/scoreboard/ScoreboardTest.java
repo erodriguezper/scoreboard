@@ -17,9 +17,7 @@ package com.sportradar.scoreboard;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import com.sportradar.scoreboard.comparators.OrderComparators;
-import com.sportradar.scoreboard.entity.Match;
 import com.sportradar.scoreboard.repository.MatchRepository;
-import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -53,8 +51,7 @@ public class ScoreboardTest {
      */
     @Test
     public void testFinishGame() {
-        Match m = new Match(3, "team1", "team2", Instant.now());
-        scoreboard.finishGame(m);
+        scoreboard.finishGame(3);
 
         Mockito.verify(repository, Mockito.times(1)).delete(3);
     }
@@ -64,8 +61,7 @@ public class ScoreboardTest {
      */
     @Test
     public void testUpdateGame() {
-        Match m = new Match(3, "team1", "team2", Instant.now());
-        scoreboard.updateGame(m, 3, 4);
+        scoreboard.updateGame(3, 3, 4);
 
         Mockito.verify(repository, Mockito.times(1)).update(3, 3, 4);
     }

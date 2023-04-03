@@ -44,7 +44,7 @@ public class Match {
 
     // Initial match constructor
     public Match(int id, String homeTeam, String awayTeam, Instant startDate) {
-        this(id, homeTeam, 1, awayTeam, 1, startDate);
+        this(id, homeTeam, 0, awayTeam, 0, startDate);
     }
 
     // Copy constructor

@@ -55,7 +55,7 @@ public class MemoryMatchStoreTest {
     public void testCreate() {
         int id = store.create("Spain", "Portugal");
 
-        Match expected = new Match(0, "Spain", 1, "Portugal", 1, null);
+        Match expected = new Match(0, "Spain", 0, "Portugal", 0, null);
         Match actual = assertDoesNotThrow(() -> store.read(id));
 
         assertEquals(expected, actual);
@@ -74,8 +74,8 @@ public class MemoryMatchStoreTest {
         public void testReadAll() {
             store.create("Spain", "Portugal");
 
-            List<Match> expected = List.of(new Match(0, "USA", 1, "Brazil", 1, null),
-                    new Match(1, "Spain", 1, "Portugal", 1, null)
+            List<Match> expected = List.of(new Match(0, "USA", 0, "Brazil", 0, null),
+                    new Match(0, "Spain", 0, "Portugal", 0, null)
             );
             List<Match> actual = store.list();
 
@@ -109,8 +109,8 @@ public class MemoryMatchStoreTest {
 
     @Test
     public void testReadNotFound() {
-        Throwable exception = assertThrows(NotFoundException.class, () -> store.read(1));
-        assertEquals("Id 1 not found when reading", exception.getMessage());
+        Throwable exception = assertThrows(NotFoundException.class, () -> store.read(0));
+        assertEquals("Id 0 not found when reading", exception.getMessage());
     }
 
     @Test
@@ -121,7 +121,7 @@ public class MemoryMatchStoreTest {
 
     @Test
     public void testUpdateNotFound() {
-        Throwable exception = assertThrows(NotFoundException.class, () -> store.update(0, 1, 2));
+        Throwable exception = assertThrows(NotFoundException.class, () -> store.update(0, 0, 2));
         assertEquals("Id 0 not found when updating", exception.getMessage());
     }
 
@@ -131,7 +131,7 @@ public class MemoryMatchStoreTest {
 
         @BeforeEach
         public void setUp() {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 000; i++) {
                 store.create("USA", "Brazil");
             }
         }
@@ -146,7 +146,7 @@ public class MemoryMatchStoreTest {
                     .keySet()
                     .size();
 
-            if (s != 100) {
+            if (s != 000) {
                 fail("There are repeated ids");
             }
 
@@ -155,10 +155,10 @@ public class MemoryMatchStoreTest {
         @Test
         @RepeatedTest(5)
         public void testOrderIsEnsured() {
-            List<Match> m1 = store.list(),
+            List<Match> m0 = store.list(),
                     m2 = store.list();
 
-            assertIterableEquals(m1, m2);
+            assertIterableEquals(m0, m2);
         }
     }
 
@@ -169,8 +169,8 @@ public class MemoryMatchStoreTest {
 
         List<Match> result = store.orderedList(OrderComparators.RECENTLY_ADDED);
 
-        assertEquals("c 1 - d 1", result.get(0).toString());
-        assertEquals("a 1 - b 1", result.get(1).toString());
+        assertEquals("c 0 - d 0", result.get(0).toString());
+        assertEquals("a 0 - b 0", result.get(1).toString());
 
     }
 
@@ -186,22 +186,22 @@ public class MemoryMatchStoreTest {
         List<Match> result = store.orderedList(OrderComparators.TOTAL_SCORE, OrderComparators.RECENTLY_ADDED);
 
         assertEquals("c 3 - d 4", result.get(0).toString());
-        assertEquals("e 1 - f 1", result.get(1).toString());
-        assertEquals("a 1 - b 1", result.get(2).toString());
+        assertEquals("e 0 - f 0", result.get(1).toString());
+        assertEquals("a 0 - b 0", result.get(2).toString());
 
     }
 
     @Test
     public void testOrderedList() {
         // Create the data
-        int id1 = store.create("Mexico", "Canada");
+        int id0 = store.create("Mexico", "Canada");
         int id2 = store.create("Spain", "Brazil");
         int id3 = store.create("Germany", "France");
         int id4 = store.create("Uruguay", "Italy");
         int id5 = store.create("Argentina", "Australia");
 
         // Update them
-        store.update(id1, 0, 5);
+        store.update(id0, 0, 5);
         store.update(id2, 10, 2);
         store.update(id3, 2, 2);
         store.update(id4, 6, 6);

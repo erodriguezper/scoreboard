@@ -30,26 +30,50 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scoreboard {
 
-    private MatchRepository repository;
-    
+    private final MatchRepository repository;
+
     @Autowired
     public Scoreboard(MatchRepository repository) {
-            this.repository = repository;
+        this.repository = repository;
     }
 
+    /**
+     * Starts a game with initial score of 0 - 0
+     *
+     * @param homeTeamName String that represents the home team
+     * @param awayTeamName String that represents the away team
+     * @return the id of the created match
+     */
     public int startGame(String homeTeamName, String awayTeamName) {
         return repository.create(homeTeamName, awayTeamName);
     }
 
-    public void finishGame(Match match) {
-        repository.delete(match.getId());
+    /**
+     * Finishes a game, i.e. it deletes it from the storage
+     *
+     * @param id Integer that represents the game
+     */
+    public void finishGame(int id) {
+        repository.delete(id);
     }
 
-    public void updateGame(Match match, int homeTeamScore, int awayTeamScore) {
-        repository.update(match.getId(), homeTeamScore, awayTeamScore);
+    /**
+     * Updates scores from a game
+     *
+     * @param id Integer that represents the match
+     * @param homeTeamScore Goals that home team has scored
+     * @param awayTeamScore Goals that away team has scored
+     */
+    public void updateGame(int id, int homeTeamScore, int awayTeamScore) {
+        repository.update(id, homeTeamScore, awayTeamScore);
     }
 
+    /**
+     * Lists the game ordered by total score and recently added
+     *
+     * @return the list of games ordered
+     */
     public List<Match> getSummaryByTotalScore() {
-        return repository.orderedList(OrderComparators.MAX_SCORER, OrderComparators.RECENTLY_ADDED);
+        return repository.orderedList(OrderComparators.TOTAL_SCORE, OrderComparators.RECENTLY_ADDED);
     }
 }
