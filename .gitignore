@@ -1,4 +1,8 @@
-nb-configuration.xml
-nbactions.xml
-nbproject/**
-target/**
+Application/nb-configuration.xml
+Application/nbproject/**
+Application/target/**
+Library/nb-configuration.xml
+Library/nbactions.xml
+Library/nbproject/**
+Library/target/**
+**/nbactions.xml
